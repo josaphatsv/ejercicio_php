@@ -1,12 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD</title>
-</head>
-<body>
-    
-</body>
-</html>
+<?php
+    /**
+     * Se llama la funcion conexion en el sitios de conexion 
+     */
+      require_once 'model/database.php';
+     
+
+  $controller = 'unidad';
+
+  // Todo esta lógica hara el papel de un FrontController
+  if(!isset($_REQUEST['c']))
+  {
+    //Llamado de la página principal
+    require_once "controller/$controller.controller.php";
+    $controller = ucwords($controller) . 'Controller';
+    $controller = new $controller;
+    $controller->Index();
+  }
+  else
+  {
+    // Obtiene el controlador a cargar
+    $controller = strtolower($_REQUEST['c']);
+    $accion = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'Index';
+
+    // Instancia el controlador
+    require_once "controller/$controller.controller.php";
+    $controller = ucwords($controller) . 'Controller';
+    $controller = new $controller;
+
+    // Llama la accion
+    call_user_func( array( $controller, $accion ) );
+  }
+
+?>
