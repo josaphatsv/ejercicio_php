@@ -17,7 +17,8 @@ class unidades
 	{
 		try
 		{
-			$this->pdo = DataBase::conexion();
+			$cn =  new DataBase;
+			$this->pdo=$cn->conexion();
 		}
 		catch(Exception $e)
 		{
